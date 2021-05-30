@@ -1,9 +1,9 @@
 package com.hamada.sinwar.myproject2021.ui.fragments
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,7 +15,7 @@ import com.hamada.sinwar.myproject2021.R
 import com.hamada.sinwar.myproject2021.adapters.NewsAdapter
 import kotlinx.android.synthetic.main.fragment_saved_news.*
 
-class SavedNewsFragment : Fragment(R.layout.fragment_saved_news) {
+class SavedNewsFragment : Fragment(R.layout.fragment_saved_news), NewsAdapter.OnClickItem {
 
     lateinit var viewModel: NewsViewModel
     lateinit var newsAdapter:NewsAdapter
@@ -24,13 +24,6 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).viewModel
         setupRecyclerView()
-
-        newsAdapter.setOnItemClickListener {
-            val bundle = Bundle().apply {
-                putSerializable("article", it)
-            }
-            findNavController().navigate(R.id.action_savedNewsFragment_to_articleFragment, bundle)
-        }
 
         val itemTouchHelperCallBack = object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.UP or ItemTouchHelper.DOWN,
@@ -59,16 +52,22 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news) {
 
         ItemTouchHelper(itemTouchHelperCallBack).attachToRecyclerView(rvSavedNews)
 
-        viewModel.getSavedNews().observe(viewLifecycleOwner, Observer { articles ->
+        viewModel.getSavedNews().observe(viewLifecycleOwner, { articles ->
             newsAdapter.differ.submitList(articles)
         })
     }
 
     private fun setupRecyclerView() {
-        newsAdapter = NewsAdapter()
+        newsAdapter = NewsAdapter(activity as Activity,this)
         rvSavedNews.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
         }
+    }
+    override fun onArticleClicked(position: Int) {
+        val bundle = Bundle().apply {
+            putSerializable("article", newsAdapter.differ.currentList[position])
+        }
+        findNavController().navigate(R.id.action_savedNewsFragment_to_articleFragment, bundle)
     }
 }

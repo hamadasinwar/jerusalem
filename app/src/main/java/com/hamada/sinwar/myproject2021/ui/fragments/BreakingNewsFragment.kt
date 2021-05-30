@@ -1,5 +1,6 @@
 package com.hamada.sinwar.myproject2021.ui.fragments
 
+import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -18,7 +19,7 @@ import com.hamada.sinwar.myproject2021.R
 import com.hamada.sinwar.myproject2021.util.Constants.Companion.QUERY_PAGE_SIZE
 import kotlinx.android.synthetic.main.fragment_breaking_news.*
 
-class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
+class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news), NewsAdapter.OnClickItem {
 
     lateinit var viewModel: NewsViewModel
     lateinit var newsAdapter: NewsAdapter
@@ -27,13 +28,6 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).viewModel
         setupRecyclerView()
-
-        newsAdapter.setOnItemClickListener {
-            val bundle = Bundle().apply {
-                putSerializable("article", it)
-            }
-            findNavController().navigate(R.id.action_breakingNewsFragment_to_articleFragment, bundle)
-        }
 
         viewModel.breakingNews.observe(viewLifecycleOwner, Observer { response ->
             when(response) {
@@ -105,11 +99,18 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
     }
 
     private fun setupRecyclerView() {
-        newsAdapter = NewsAdapter()
+        newsAdapter = NewsAdapter(activity as Activity, this)
         rvBreakingNews.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
             addOnScrollListener(this@BreakingNewsFragment.scrollListener)
         }
+    }
+
+    override fun onArticleClicked(position: Int) {
+        val bundle = Bundle().apply {
+            putSerializable("article", newsAdapter.differ.currentList[position])
+        }
+        findNavController().navigate(R.id.action_breakingNewsFragment_to_articleFragment, bundle)
     }
 }

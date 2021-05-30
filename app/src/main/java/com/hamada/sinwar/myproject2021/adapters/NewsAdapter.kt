@@ -1,5 +1,7 @@
 package com.hamada.sinwar.myproject2021.adapters
 
+import android.app.Activity
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +13,7 @@ import com.bumptech.glide.Glide
 import com.hamada.sinwar.myproject2021.R
 import kotlinx.android.synthetic.main.item_article_preview.view.*
 
-class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
+class NewsAdapter(private val activity: Activity, private val onClickItem: OnClickItem) : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
 
     inner class ArticleViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
 
@@ -41,38 +43,30 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
         return differ.currentList.size
     }
 
-    private var onItemClickListener: ((Article) -> Unit)? = null
-
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         val article = differ.currentList[position]
         holder.itemView.apply {
             Glide.with(this).load(article.urlToImage).into(ivArticleImage)
-            tvSource.text = article.source?.name
+            tvContent.text = article.source?.name
             tvTitle.text = article.title
             tvDescription.text = article.description
-            tvPublishedAt.text = article.publishedAt
+            tvPublishedAt.text = article.publishedAt?.slice(0..9)
 
-            setOnClickListener {
-                onItemClickListener?.let { it(article) }
+            card_view.setOnClickListener {
+                onClickItem.onArticleClicked(position)
+            }
+
+            share_image_card.setOnClickListener {
+                val intent = Intent(Intent.ACTION_SEND)
+                intent.type = "text/plain"
+                intent.putExtra(Intent.EXTRA_TEXT,"${article.url}")
+                activity.startActivity(Intent.createChooser(intent, "Share"))
             }
         }
     }
 
-    fun setOnItemClickListener(listener: (Article) -> Unit) {
-        onItemClickListener = listener
+    interface OnClickItem{
+        fun onArticleClicked(position: Int)
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
