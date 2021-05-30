@@ -7,10 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.hamada.sinwar.myproject2021.models.Article
 
-@Database(
-    entities = [Article::class],
-    version = 2
-)
+@Database(entities = [Article::class], version = 2)
 @TypeConverters(Converters::class)
 abstract class ArticleDatabase : RoomDatabase() {
 

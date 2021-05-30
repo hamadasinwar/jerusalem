@@ -31,7 +31,7 @@ class NewsViewModel(app: Application, val newsRepository: NewsRepository) : Andr
     var searchNewsResponse: NewsResponse? = null
 
     init {
-        getBreakingNews("eg")
+        getBreakingNews("il")
     }
 
     fun getBreakingNews(countryCode: String) = viewModelScope.launch {

@@ -7,7 +7,7 @@ import com.hamada.sinwar.myproject2021.models.Article
 class NewsRepository(val db: ArticleDatabase) {
 
     suspend fun getBreakingNews(countryCode: String, pageNumber: Int) =
-        RetrofitInstance.api.getBreakingNews(countryCode, pageNumber)
+        RetrofitInstance.api.getBreakingNews(pageNumber)
 
     suspend fun searchNews(countryCode: String, pageNumber: Int) =
         RetrofitInstance.api.searchForNews(countryCode, pageNumber)
