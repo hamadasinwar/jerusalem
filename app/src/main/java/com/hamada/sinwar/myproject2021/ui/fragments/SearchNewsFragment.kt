@@ -3,6 +3,7 @@ package com.hamada.sinwar.myproject2021.ui.fragments
 import android.app.Activity
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.AbsListView
 import android.widget.Toast
@@ -84,7 +85,6 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news), NewsAdapter.
         paginationProgressBar.visibility = View.VISIBLE
         isLoading = true
     }
-
 
     var isLoading = false
     var isLastPage = false

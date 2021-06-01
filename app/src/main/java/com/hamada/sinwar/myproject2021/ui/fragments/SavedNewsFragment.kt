@@ -2,6 +2,7 @@ package com.hamada.sinwar.myproject2021.ui.fragments
 
 import android.app.Activity
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -64,6 +65,7 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news), NewsAdapter.On
             layoutManager = LinearLayoutManager(activity)
         }
     }
+
     override fun onArticleClicked(position: Int) {
         val bundle = Bundle().apply {
             putSerializable("article", newsAdapter.differ.currentList[position])

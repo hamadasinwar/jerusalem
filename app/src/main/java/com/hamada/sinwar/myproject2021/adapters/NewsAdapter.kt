@@ -51,6 +51,7 @@ class NewsAdapter(private val activity: Activity, private val onClickItem: OnCli
             tvTitle.text = article.title
             tvDescription.text = article.description
             tvPublishedAt.text = article.publishedAt?.slice(0..9)
+            tvSource.visibility = View.GONE
 
             card_view.setOnClickListener {
                 onClickItem.onArticleClicked(position)
