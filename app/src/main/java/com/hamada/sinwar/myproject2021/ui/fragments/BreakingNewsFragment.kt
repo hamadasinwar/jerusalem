@@ -3,36 +3,49 @@ package com.hamada.sinwar.myproject2021.ui.fragments
 import android.app.Activity
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.widget.AbsListView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.FirebaseApp
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.hamada.sinwar.myproject2021.R
 import com.hamada.sinwar.myproject2021.adapters.NewsAdapter
+import com.hamada.sinwar.myproject2021.app.NewsApplication
+import com.hamada.sinwar.myproject2021.models.MyMarker
 import com.hamada.sinwar.myproject2021.ui.NewsActivity
 import com.hamada.sinwar.myproject2021.ui.NewsViewModel
-import com.hamada.sinwar.myproject2021.util.Resource
-import com.hamada.sinwar.myproject2021.R
 import com.hamada.sinwar.myproject2021.util.Constants.Companion.QUERY_PAGE_SIZE
+import com.hamada.sinwar.myproject2021.util.Resource
 import kotlinx.android.synthetic.main.fragment_breaking_news.*
 
 class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news), NewsAdapter.OnClickItem {
 
     lateinit var viewModel: NewsViewModel
     lateinit var newsAdapter: NewsAdapter
+    lateinit var db:FirebaseFirestore
+    lateinit var app:NewsApplication
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        db = Firebase.firestore
+        app = requireActivity().application as NewsApplication
+        FirebaseApp.initializeApp(requireContext())
         viewModel = (activity as NewsActivity).viewModel
-        setupRecyclerView()
-
-        viewModel.breakingNews.observe(viewLifecycleOwner, Observer { response ->
+        db.collection("cityInfo").get().addOnSuccessListener {query->
+            for (doc in query.documents){
+                val marker = MyMarker(doc.id, doc.getString("title"), doc.getString("text"),
+                    doc.getString("image"), doc.get("lat").toString().toDouble(),
+                    doc.get("long").toString().toDouble())
+                app.cityInfo.add(marker)
+            }
+        }
+        viewModel.breakingNews.observe(viewLifecycleOwner, { response ->
             when(response) {
                 is Resource.Success -> {
                     hideProgressBar()
@@ -57,6 +70,15 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news), NewsAdap
                 }
             }
         })
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupRecyclerView()
+
+
+
     }
 
     private fun hideProgressBar() {
