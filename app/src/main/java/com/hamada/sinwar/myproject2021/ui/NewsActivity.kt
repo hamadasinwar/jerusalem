@@ -1,17 +1,20 @@
 package com.hamada.sinwar.myproject2021.ui
 
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.iterator
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.hamada.sinwar.myproject2021.R
 import com.hamada.sinwar.myproject2021.db.ArticleDatabase
 import com.hamada.sinwar.myproject2021.repository.NewsRepository
-import com.hamada.sinwar.myproject2021.R
 import com.hamada.sinwar.myproject2021.ui.fragments.SearchNewsFragment
 import kotlinx.android.synthetic.main.activity_news.*
+
 
 class NewsActivity : AppCompatActivity() {
 
@@ -27,8 +30,18 @@ class NewsActivity : AppCompatActivity() {
         bottomNavigationView.setupWithNavController(newsNavHostFragment.findNavController())
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.option_menu, menu)
+        //for(int i = 0; i < menu.size(); i++){
+
+        for (item in menu.iterator()){
+            val drawable = item.icon
+            if (drawable != null) {
+                drawable.mutate()
+                drawable.setColorFilter(resources.getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP)
+            }
+        }
+
         return true
     }
 

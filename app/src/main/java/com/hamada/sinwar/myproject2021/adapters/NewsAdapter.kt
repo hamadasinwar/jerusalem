@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -45,6 +46,7 @@ class NewsAdapter(private val activity: Activity, private val onClickItem: OnCli
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         val article = differ.currentList[position]
+        val animation = AnimationUtils.loadAnimation(activity, R.anim.scale_up)
         holder.itemView.apply {
             Glide.with(this).load(article.urlToImage).into(ivArticleImage)
             tvContent.text = article.source?.name
@@ -52,6 +54,7 @@ class NewsAdapter(private val activity: Activity, private val onClickItem: OnCli
             tvDescription.text = article.description
             tvPublishedAt.text = article.publishedAt?.slice(0..9)
             tvSource.visibility = View.GONE
+            card_view.startAnimation(animation)
 
             card_view.setOnClickListener {
                 onClickItem.onArticleClicked(position)

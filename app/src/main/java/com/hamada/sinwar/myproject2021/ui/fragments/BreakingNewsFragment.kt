@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.hamada.sinwar.myproject2021.ui.fragments
 
 import android.app.Activity
@@ -27,8 +29,8 @@ import kotlinx.android.synthetic.main.fragment_breaking_news.*
 class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news), NewsAdapter.OnClickItem {
 
     lateinit var viewModel: NewsViewModel
-    lateinit var newsAdapter: NewsAdapter
-    lateinit var db:FirebaseFirestore
+    private lateinit var newsAdapter: NewsAdapter
+    private lateinit var db:FirebaseFirestore
     lateinit var app:NewsApplication
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -95,10 +97,10 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news), NewsAdap
     var isLastPage = false
     var isScrolling = false
 
-    val scrollListener = object : RecyclerView.OnScrollListener(){
+    private val scrollListener = object : RecyclerView.OnScrollListener(){
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             super.onScrolled(recyclerView, dx, dy)
-            val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+            val layoutManager = recyclerView.layoutManager!! as LinearLayoutManager
             val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
             val visibleItemCount = layoutManager.childCount
             val totalItemCount = layoutManager.itemCount
@@ -127,8 +129,10 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news), NewsAdap
         newsAdapter = NewsAdapter(activity as Activity, this)
         rvBreakingNews.apply {
             adapter = newsAdapter
+            layoutManager
             layoutManager = LinearLayoutManager(activity)
             addOnScrollListener(this@BreakingNewsFragment.scrollListener)
+
         }
     }
 

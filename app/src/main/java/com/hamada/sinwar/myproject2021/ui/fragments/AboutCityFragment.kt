@@ -6,10 +6,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MapStyleOptions
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import com.hamada.sinwar.myproject2021.R
 import com.hamada.sinwar.myproject2021.adapters.CustomInfoWindowAdapter
 import com.hamada.sinwar.myproject2021.app.NewsApplication
@@ -37,27 +34,10 @@ class AboutCityFragment : Fragment(R.layout.fragment_about_city) {
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(jerusalem, 12F))
         for (m in cityInfo){
             val marker = LatLng(m.lat!!, m.long!!)
-            val mm = googleMap.addMarker(MarkerOptions().position(marker))
+            val mm = googleMap.addMarker(MarkerOptions().position(marker).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)))
             markers.add(mm)
         }
         googleMap.setInfoWindowAdapter(CustomInfoWindowAdapter(requireContext(), markers, cityInfo))
-        /*googleMap.setInfoWindowAdapter(object : GoogleMap.InfoWindowAdapter {
-            override fun getInfoWindow(p0: Marker): View? {
-                return null
-            }
-
-            override fun getInfoContents(p0: Marker): View? {
-                val v = layoutInflater.inflate(R.layout.info_window, null)
-                v.infoTitle.text = "HaMaDa"
-                v.infoText.text = "sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
-
-                if (onMarkerClick(p0) && markerclicked == 1){
-                    v.infoImage.setImageResource(R.drawable.the_rock_dome)
-                }
-
-                return v
-            }
-
-        })*/
+        googleMap.uiSettings.isZoomGesturesEnabled = false
     }
 }
