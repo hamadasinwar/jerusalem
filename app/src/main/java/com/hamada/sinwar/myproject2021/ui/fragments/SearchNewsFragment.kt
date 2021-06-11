@@ -35,8 +35,8 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news), NewsAdapter.
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = (activity as NewsActivity).viewModel
         app = activity?.application as NewsApplication
+        viewModel = app.viewModel
         setupRecyclerView()
 
         var job: Job? = null

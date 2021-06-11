@@ -14,16 +14,19 @@ import com.hamada.sinwar.myproject2021.ui.NewsActivity
 import com.hamada.sinwar.myproject2021.ui.NewsViewModel
 import com.hamada.sinwar.myproject2021.R
 import com.hamada.sinwar.myproject2021.adapters.NewsAdapter
+import com.hamada.sinwar.myproject2021.app.NewsApplication
 import kotlinx.android.synthetic.main.fragment_saved_news.*
 
 class SavedNewsFragment : Fragment(R.layout.fragment_saved_news), NewsAdapter.OnClickItem {
 
     lateinit var viewModel: NewsViewModel
     lateinit var newsAdapter:NewsAdapter
+    lateinit var app: NewsApplication
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = (activity as NewsActivity).viewModel
+        app = requireActivity().application as NewsApplication
+        viewModel = app.viewModel
         setupRecyclerView()
 
         val itemTouchHelperCallBack = object : ItemTouchHelper.SimpleCallback(

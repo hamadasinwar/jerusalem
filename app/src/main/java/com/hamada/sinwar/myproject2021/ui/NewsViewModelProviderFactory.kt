@@ -1,12 +1,12 @@
 package com.hamada.sinwar.myproject2021.ui
 
-import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.hamada.sinwar.myproject2021.app.NewsApplication
 import com.hamada.sinwar.myproject2021.repository.NewsRepository
 
 class NewsViewModelProviderFactory(
-    val app: Application,
+    val app: NewsApplication,
     val newsRepository: NewsRepository
 ) : ViewModelProvider.Factory {
 

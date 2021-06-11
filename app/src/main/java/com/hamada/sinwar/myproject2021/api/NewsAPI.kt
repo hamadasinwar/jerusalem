@@ -10,12 +10,12 @@ interface NewsAPI {
 
     @GET("v2/everything?q=jerusalem")
     suspend fun getBreakingNews(
-        //@Query("country")
-        //countryCode: String = "us",
         @Query("page")
         pageNumber: Int = 1,
+        @Query("sortBy")
+        sortBy: String,
         @Query("apiKey")
-        apiKey: String = API_KEY
+        apiKey: String = API_KEY,
     ): Response<NewsResponse>
 
     @GET("v2/everything")

@@ -20,7 +20,6 @@ import com.hamada.sinwar.myproject2021.R
 import com.hamada.sinwar.myproject2021.adapters.NewsAdapter
 import com.hamada.sinwar.myproject2021.app.NewsApplication
 import com.hamada.sinwar.myproject2021.models.MyMarker
-import com.hamada.sinwar.myproject2021.ui.NewsActivity
 import com.hamada.sinwar.myproject2021.ui.NewsViewModel
 import com.hamada.sinwar.myproject2021.util.Constants.Companion.QUERY_PAGE_SIZE
 import com.hamada.sinwar.myproject2021.util.Resource
@@ -38,7 +37,7 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news), NewsAdap
         db = Firebase.firestore
         app = requireActivity().application as NewsApplication
         FirebaseApp.initializeApp(requireContext())
-        viewModel = (activity as NewsActivity).viewModel
+        viewModel = app.viewModel
         db.collection("cityInfo").get().addOnSuccessListener {query->
             for (doc in query.documents){
                 val marker = MyMarker(doc.id, doc.getString("title"), doc.getString("text"),
@@ -47,7 +46,8 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news), NewsAdap
                 app.cityInfo.add(marker)
             }
         }
-        viewModel.breakingNews.observe(viewLifecycleOwner, { response ->
+        Log.e("hmd", "Data: ${app.breakingNews.value?.data?.articles?.size}")
+        app.breakingNews.observe(viewLifecycleOwner, { response ->
             when(response) {
                 is Resource.Success -> {
                     hideProgressBar()
@@ -109,7 +109,7 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news), NewsAdap
             val shouldPaginate = isNotLoadingAndNotLastPage && isAtLastItem && isNotAtBeginning &&
                     isTotalMoreThanVisible && isScrolling
             if (shouldPaginate){
-                viewModel.getBreakingNews("il")
+                viewModel.getBreakingNews()
                 isScrolling = false
             }
         }

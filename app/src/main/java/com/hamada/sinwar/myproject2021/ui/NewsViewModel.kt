@@ -1,6 +1,5 @@
 package com.hamada.sinwar.myproject2021.ui
 
-import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities.*
@@ -16,9 +15,8 @@ import kotlinx.coroutines.launch
 import okio.IOException
 import retrofit2.Response
 
-class NewsViewModel(app: Application, val newsRepository: NewsRepository) : AndroidViewModel(app) {
+class NewsViewModel(val app: NewsApplication, private val newsRepository: NewsRepository) : AndroidViewModel(app) {
 
-    val breakingNews = (app as NewsApplication).breakingNews
     var breakingNewsPage = 1
     var breakingNewsResponse: NewsResponse? = null
 
@@ -27,11 +25,11 @@ class NewsViewModel(app: Application, val newsRepository: NewsRepository) : Andr
     var searchNewsResponse: NewsResponse? = null
 
     init {
-        getBreakingNews("il")
+        getBreakingNews()
     }
 
-    fun getBreakingNews(countryCode: String) = viewModelScope.launch {
-        safeBreakingNewsCall(countryCode)
+    fun getBreakingNews() = viewModelScope.launch {
+        safeBreakingNewsCall()
     }
 
     fun searchNews(searchQuery: String) = viewModelScope.launch {
@@ -82,19 +80,19 @@ class NewsViewModel(app: Application, val newsRepository: NewsRepository) : Andr
         newsRepository.deleteArticle(article)
     }
 
-    private suspend fun safeBreakingNewsCall(countryCode: String){
-        breakingNews.postValue((Resource.Loading()))
+    private suspend fun safeBreakingNewsCall(){
+        app.breakingNews.postValue((Resource.Loading()))
         try {
             if (hasInternetConnection()) {
-                val response = newsRepository.getBreakingNews(countryCode, breakingNewsPage)
-                breakingNews.postValue(handleBreakingNewsResponse(response))
+                val response = newsRepository.getBreakingNews(breakingNewsPage)
+                app.breakingNews.postValue(handleBreakingNewsResponse(response))
             }else{
-                breakingNews.postValue(Resource.Error("No internet connection"))
+                app.breakingNews.postValue(Resource.Error("No internet connection"))
             }
         }catch (t: Throwable){
             when(t){
-                is IOException -> breakingNews.postValue(Resource.Error("Network Failure"))
-                else -> breakingNews.postValue(Resource.Error("Conversion Error"))
+                is IOException -> app.breakingNews.postValue(Resource.Error("Network Failure"))
+                else -> app.breakingNews.postValue(Resource.Error("Conversion Error"))
             }
         }
     }
