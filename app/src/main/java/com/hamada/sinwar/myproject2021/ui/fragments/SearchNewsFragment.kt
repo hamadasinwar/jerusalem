@@ -3,7 +3,6 @@ package com.hamada.sinwar.myproject2021.ui.fragments
 import android.app.Activity
 import android.os.Bundle
 import android.util.Log
-import android.view.MenuItem
 import android.view.View
 import android.widget.AbsListView
 import android.widget.Toast
@@ -12,10 +11,11 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.hamada.sinwar.myproject2021.ui.NewsActivity
-import com.hamada.sinwar.myproject2021.ui.NewsViewModel
 import com.hamada.sinwar.myproject2021.R
 import com.hamada.sinwar.myproject2021.adapters.NewsAdapter
+import com.hamada.sinwar.myproject2021.app.NewsApplication
+import com.hamada.sinwar.myproject2021.ui.NewsActivity
+import com.hamada.sinwar.myproject2021.ui.NewsViewModel
 import com.hamada.sinwar.myproject2021.util.Constants
 import com.hamada.sinwar.myproject2021.util.Constants.Companion.SEARCH_NEWS_TIME_DELAY
 import com.hamada.sinwar.myproject2021.util.Resource
@@ -31,10 +31,12 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news), NewsAdapter.
 
     lateinit var viewModel: NewsViewModel
     lateinit var newsAdapter: NewsAdapter
+    lateinit var app: NewsApplication
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).viewModel
+        app = activity?.application as NewsApplication
         setupRecyclerView()
 
         var job: Job? = null

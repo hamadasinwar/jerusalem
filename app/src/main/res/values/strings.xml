@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">Jerusalem</string>
+
+    <string name="gamecoin">The CAPITAL of Palestine</string>
+    <string name="skip">SKIP</string>
+    <string name="online">Catch</string>
+    <string name="gambling">Latest News</string>
+    <string name="temporibus_autem_aut_officiis_debitis_aut_rerum_necessitatibus">about Jerusalem and whats going on in\nthe ancient city.</string>
+    <string name="forr">Educate</string>
+    <string name="gamers">Yourself</string>
+    <string name="excepteur_sint_occaecat_cupidatat_non_proident_sunt_in_culpa_qui_officia">Get to know Jerusalem and its history\nand its historical landmarks.</string>
+    <string name="title_activity_on_boarding">OnBoardingActivity</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
+
 </resources>

@@ -4,13 +4,9 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities.*
-import android.os.Build
-import androidx.core.content.getSystemService
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.room.Query
 import com.hamada.sinwar.myproject2021.app.NewsApplication
 import com.hamada.sinwar.myproject2021.models.Article
 import com.hamada.sinwar.myproject2021.models.NewsResponse
@@ -22,7 +18,7 @@ import retrofit2.Response
 
 class NewsViewModel(app: Application, val newsRepository: NewsRepository) : AndroidViewModel(app) {
 
-    val breakingNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    val breakingNews = (app as NewsApplication).breakingNews
     var breakingNewsPage = 1
     var breakingNewsResponse: NewsResponse? = null
 

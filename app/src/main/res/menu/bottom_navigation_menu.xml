@@ -13,4 +13,8 @@
         android:title="About City"
         android:icon="@drawable/the_rock_dome" />
 
+    <item android:id="@+id/searchNewsFragment"
+        android:title="Search News"
+        android:icon="@drawable/ic_search" />
+
 </menu>

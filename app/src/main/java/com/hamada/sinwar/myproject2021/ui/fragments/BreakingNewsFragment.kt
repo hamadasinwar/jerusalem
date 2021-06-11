@@ -78,9 +78,6 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news), NewsAdap
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
-
-
-
     }
 
     private fun hideProgressBar() {
@@ -132,7 +129,6 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news), NewsAdap
             layoutManager
             layoutManager = LinearLayoutManager(activity)
             addOnScrollListener(this@BreakingNewsFragment.scrollListener)
-
         }
     }
 
