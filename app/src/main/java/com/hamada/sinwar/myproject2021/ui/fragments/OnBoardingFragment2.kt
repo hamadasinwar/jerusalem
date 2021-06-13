@@ -29,5 +29,6 @@ class OnBoardingFragment2 : Fragment() {
     private fun openMain() {
         startActivity(Intent(activity, NewsActivity::class.java))
         requireActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+        requireActivity().finish()
     }
 }

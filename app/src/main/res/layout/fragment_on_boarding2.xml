@@ -80,7 +80,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="horizontal">
 
         <ImageView
@@ -95,11 +95,13 @@
             android:layout_width="120dp"
             android:layout_height="55dp"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="45dp"
+            android:layout_marginBottom="45dp"
             android:background="@drawable/button"
             android:text="Dive in"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"/>
 
     </RelativeLayout>
 

@@ -1,43 +1,40 @@
 package com.hamada.sinwar.myproject2021.ui.fragments
 
 import android.os.Bundle
-import android.view.View
 import androidx.fragment.app.Fragment
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import com.google.android.material.tabs.TabLayout
 import com.hamada.sinwar.myproject2021.R
-import com.hamada.sinwar.myproject2021.adapters.CustomInfoWindowAdapter
-import com.hamada.sinwar.myproject2021.app.NewsApplication
-import com.hamada.sinwar.myproject2021.models.MyMarker
+import com.hamada.sinwar.myproject2021.adapters.TabLayoutViewPagerAdapter
+import kotlinx.android.synthetic.main.fragment_about_city.view.*
 
-class AboutCityFragment : Fragment(R.layout.fragment_about_city) {
+class AboutCityFragment : Fragment() {
 
-    lateinit var app: NewsApplication
-    lateinit var cityInfo:MutableList<MyMarker>
-    lateinit var markers:MutableList<Marker>
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val root = inflater.inflate(R.layout.fragment_about_city, container, false)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        root.tabLayout!!.addTab(root.tabLayout!!.newTab().setText("Map"))
+        root.tabLayout!!.addTab(root.tabLayout!!.newTab().setText("List"))
+        root.tabLayout!!.tabGravity = TabLayout.GRAVITY_FILL
 
-        app = requireActivity().application as NewsApplication
-        cityInfo = app.cityInfo
-        markers = mutableListOf()
-        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
-        mapFragment?.getMapAsync(callback)
-    }
+        val adapter = TabLayoutViewPagerAdapter(requireContext(), requireActivity().supportFragmentManager)
+        root.viewPager!!.adapter = adapter
 
-    private val callback = OnMapReadyCallback { googleMap ->
-        googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(requireContext(), R.raw.map_style))
-        val jerusalem = LatLng(31.768307723966437, 35.21334980686194)
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(jerusalem, 12F))
-        for (m in cityInfo){
-            val marker = LatLng(m.lat!!, m.long!!)
-            val mm = googleMap.addMarker(MarkerOptions().position(marker).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)))
-            markers.add(mm)
-        }
-        googleMap.setInfoWindowAdapter(CustomInfoWindowAdapter(requireContext(), markers, cityInfo))
-        googleMap.uiSettings.isZoomGesturesEnabled = false
+        root.viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(root.tabLayout))
+        root.tabLayout!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                root.viewPager!!.currentItem = tab.position
+            }
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+
+            }
+            override fun onTabReselected(tab: TabLayout.Tab) {
+
+            }
+        })
+
+        return root
     }
 }

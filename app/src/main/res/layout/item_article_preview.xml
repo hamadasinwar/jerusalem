@@ -43,7 +43,7 @@
                     android:id="@+id/tvContent"
                     style="@style/SectionTextViewStyle"
                     android:layout_alignParentStart="true"
-                    android:layout_toStartOf="@id/ivArticleImage"
+                    android:layout_toStartOf="@id/ivArticleImageCard"
                     tools:text="section" />
 
                 <TextView
@@ -53,16 +53,25 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/tvContent"
-                    android:layout_toStartOf="@+id/ivArticleImage"
+                    android:layout_toStartOf="@+id/ivArticleImageCard"
                     tools:text="trailText" />
 
-                <ImageView
-                    android:id="@+id/ivArticleImage"
-                    android:layout_width="@dimen/thumbnail_image_width"
-                    android:layout_height="@dimen/thumbnail_image_height"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/ivArticleImageCard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:contentDescription="Image"
-                    android:scaleType="centerCrop" />
+                    card_view:cardCornerRadius="18dp">
+
+                    <ImageView
+                        android:id="@+id/ivArticleImage"
+                        android:layout_width="@dimen/thumbnail_image_width"
+                        android:layout_height="@dimen/thumbnail_image_height"
+                        android:contentDescription="@string/image"
+                        android:scaleType="centerCrop" />
+
+                </androidx.cardview.widget.CardView>
+
             </RelativeLayout>
 
             <TextView

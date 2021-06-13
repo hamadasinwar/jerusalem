@@ -13,15 +13,11 @@ import kotlinx.android.synthetic.main.activity_news.*
 
 class NewsActivity : AppCompatActivity() {
 
-    lateinit var app:NewsApplication
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news)
-        app = application as NewsApplication
+
         bottomNavigationView.setupWithNavController(newsNavHostFragment.findNavController())
     }
-
-
 
 }
