@@ -1,7 +1,6 @@
 package com.hamada.sinwar.myproject2021.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -32,18 +31,15 @@ class MapFragment : Fragment(R.layout.fragment_map) {
     private val callback = OnMapReadyCallback { googleMap ->
         googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(requireContext(), R.raw.map_style))
         val jerusalem = LatLng(31.768307723966437, 35.21334980686194)
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(jerusalem, 12F))
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(jerusalem, 13F))
         for (m in cityInfo){
             val marker = LatLng(m.lat!!, m.long!!)
-            val mm = googleMap.addMarker(MarkerOptions().position(marker).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)))
+            val mm = googleMap.addMarker(MarkerOptions().position(marker))
             markers.add(mm)
         }
-        googleMap.setInfoWindowAdapter(CustomInfoWindowAdapter(requireContext(), markers, cityInfo))
+        googleMap.setInfoWindowAdapter(CustomInfoWindowAdapter(requireContext(), cityInfo))
         googleMap.uiSettings.isZoomGesturesEnabled = false
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.e("hmd", "ssss")
+        googleMap.uiSettings.isMapToolbarEnabled = false
+        googleMap.uiSettings.isScrollGesturesEnabled = false
     }
 }

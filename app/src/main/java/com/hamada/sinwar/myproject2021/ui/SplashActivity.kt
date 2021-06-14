@@ -38,6 +38,10 @@ class SplashActivity : AppCompatActivity() {
             i = Intent(this, NewsActivity::class.java)
         }
 
+        if (sharedPref.getString("infoType", null) == null){
+            editor.putString("infoType", "map")
+        }
+
         app.viewModel.getBreakingNews()
 
         Handler().postDelayed({
