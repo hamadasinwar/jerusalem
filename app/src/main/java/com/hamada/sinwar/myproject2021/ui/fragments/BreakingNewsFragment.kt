@@ -20,14 +20,12 @@ import com.hamada.sinwar.myproject2021.R
 import com.hamada.sinwar.myproject2021.adapters.NewsAdapter
 import com.hamada.sinwar.myproject2021.app.NewsApplication
 import com.hamada.sinwar.myproject2021.models.MyMarker
-import com.hamada.sinwar.myproject2021.ui.NewsViewModel
 import com.hamada.sinwar.myproject2021.util.Constants.Companion.QUERY_PAGE_SIZE
 import com.hamada.sinwar.myproject2021.util.Resource
 import kotlinx.android.synthetic.main.fragment_breaking_news.*
 
 class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news), NewsAdapter.OnClickItem {
 
-    lateinit var viewModel: NewsViewModel
     private lateinit var newsAdapter: NewsAdapter
     private lateinit var db:FirebaseFirestore
     lateinit var app:NewsApplication
@@ -37,7 +35,6 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news), NewsAdap
         db = Firebase.firestore
         app = requireActivity().application as NewsApplication
         FirebaseApp.initializeApp(requireContext())
-        viewModel = app.viewModel
         db.collection("cityInfo").get().addOnSuccessListener {query->
             for (doc in query.documents){
                 val marker = MyMarker(doc.id, doc.getString("title"), doc.getString("text"),
@@ -53,7 +50,7 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news), NewsAdap
                     response.data?.let { newsResponse ->
                         newsAdapter.differ.submitList(newsResponse.articles.toList())
                         val totalPages = newsResponse.totalResults / QUERY_PAGE_SIZE + 2
-                        isLastPage = viewModel.breakingNewsPage == totalPages
+                        isLastPage = app.viewModel.breakingNewsPage == totalPages
                         if (isLastPage){
                             rvBreakingNews.setPadding(0, 0, 0, 0)
                         }
@@ -108,7 +105,7 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news), NewsAdap
             val shouldPaginate = isNotLoadingAndNotLastPage && isAtLastItem && isNotAtBeginning &&
                     isTotalMoreThanVisible && isScrolling
             if (shouldPaginate){
-                viewModel.getBreakingNews()
+                app.viewModel.getBreakingNews()
                 isScrolling = false
             }
         }

@@ -73,7 +73,6 @@ class NewsViewModel(val app: NewsApplication, private val newsRepository: NewsRe
 
     fun saveArticle(article: Article) = viewModelScope.launch {
         val l = newsRepository.replace(article)
-        Log.e("hmd", "Log: $l")
     }
 
     fun getSavedNews() = newsRepository.getSavedNews()
