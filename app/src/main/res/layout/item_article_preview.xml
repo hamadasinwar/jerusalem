@@ -29,6 +29,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:textAppearanceLarge"
                 android:textStyle="bold"
+                android:lineSpacingMultiplier="0.6"
                 android:textColor="@color/white"
                 android:background="@color/colorPrimary"
                 tools:text="title" />
@@ -51,17 +52,18 @@
                     style="@style/TrailTextViewStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:lineSpacingMultiplier="0.6"
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/tvContent"
                     android:layout_toStartOf="@+id/ivArticleImageCard"
-                    tools:text="trailText" />
+                    tools:text="trailTextssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/ivArticleImageCard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    card_view:cardCornerRadius="18dp">
+                    card_view:cardCornerRadius="10dp">
 
                     <ImageView
                         android:id="@+id/ivArticleImage"

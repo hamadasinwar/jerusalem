@@ -1,6 +1,7 @@
 package com.hamada.sinwar.myproject2021.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -39,5 +40,10 @@ class MapFragment : Fragment(R.layout.fragment_map) {
         }
         googleMap.setInfoWindowAdapter(CustomInfoWindowAdapter(requireContext(), markers, cityInfo))
         googleMap.uiSettings.isZoomGesturesEnabled = false
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.e("hmd", "ssss")
     }
 }

@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.hamada.sinwar.myproject2021.models.Article
 
-@Database(entities = [Article::class], version = 2)
+@Database(entities = [Article::class], version = 6)
 @TypeConverters(Converters::class)
 abstract class ArticleDatabase : RoomDatabase() {
 
@@ -27,6 +27,6 @@ abstract class ArticleDatabase : RoomDatabase() {
                 context.applicationContext,
                 ArticleDatabase::class.java,
                 "article_db.db"
-            ).build()
+            ).fallbackToDestructiveMigration().build()
     }
 }

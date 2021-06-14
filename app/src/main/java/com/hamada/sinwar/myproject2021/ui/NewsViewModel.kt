@@ -3,6 +3,7 @@ package com.hamada.sinwar.myproject2021.ui
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities.*
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -71,7 +72,8 @@ class NewsViewModel(val app: NewsApplication, private val newsRepository: NewsRe
     }
 
     fun saveArticle(article: Article) = viewModelScope.launch {
-        newsRepository.replace(article)
+        val l = newsRepository.replace(article)
+        Log.e("hmd", "Log: $l")
     }
 
     fun getSavedNews() = newsRepository.getSavedNews()

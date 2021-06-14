@@ -46,7 +46,6 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news), NewsAdap
                 app.cityInfo.add(marker)
             }
         }
-        Log.e("hmd", "Data: ${app.breakingNews.value?.data?.articles?.size}")
         app.breakingNews.observe(viewLifecycleOwner, { response ->
             when(response) {
                 is Resource.Success -> {
