@@ -27,22 +27,11 @@ import kotlinx.android.synthetic.main.fragment_breaking_news.*
 class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news), NewsAdapter.OnClickItem {
 
     private lateinit var newsAdapter: NewsAdapter
-    private lateinit var db:FirebaseFirestore
     lateinit var app:NewsApplication
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        db = Firebase.firestore
         app = requireActivity().application as NewsApplication
-        FirebaseApp.initializeApp(requireContext())
-        db.collection("cityInfo").get().addOnSuccessListener {query->
-            for (doc in query.documents){
-                val marker = MyMarker(doc.id, doc.getString("title"), doc.getString("text"),
-                    doc.getString("image"), doc.get("lat").toString().toDouble(),
-                    doc.get("long").toString().toDouble())
-                app.cityInfo.add(marker)
-            }
-        }
         app.breakingNews.observe(viewLifecycleOwner, { response ->
             when(response) {
                 is Resource.Success -> {

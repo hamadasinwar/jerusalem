@@ -38,20 +38,13 @@
             app:argType="com.hamada.sinwar.myproject2021.models.Article" />
     </fragment>
     <fragment
-        android:id="@+id/searchNewsFragment"
-        android:name="com.hamada.sinwar.myproject2021.ui.fragments.SearchNewsFragment"
-        android:label="SearchNewsFragment" >
-        <action
-            android:id="@+id/action_searchNewsFragment_to_articleFragment"
-            app:destination="@id/articleFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
-    </fragment>
-    <fragment
         android:id="@+id/aboutCityFragment"
         android:name="com.hamada.sinwar.myproject2021.ui.fragments.AboutCityFragment"
         android:label="fragment_about_city"
         tools:layout="@layout/fragment_about_city" />
+    <fragment
+        android:id="@+id/staticsFragment"
+        android:name="com.hamada.sinwar.myproject2021.ui.fragments.StaticsFragment"
+        android:label="fragment_statics"
+        tools:layout="@layout/fragment_statics" />
 </navigation>

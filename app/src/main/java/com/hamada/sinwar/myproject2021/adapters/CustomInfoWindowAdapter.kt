@@ -27,9 +27,8 @@ class CustomInfoWindowAdapter(context: Context,
         }
         view.infoTitle.text = myMarker?.title
         view.infoText.text = myMarker?.snippet
-        Picasso.get().load(myMarker?.image)
+        Picasso.get().load(myMarker?.image).fit().centerCrop()
             .placeholder(R.drawable.the_rock_dome)
-            //.error(R.drawable.ic_error_image)
             .into(view.infoImage, object : Callback {
                 override fun onSuccess() {
                     if (marker.isInfoWindowShown) {
