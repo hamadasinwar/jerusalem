@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hamada.sinwar.myproject2021.R
 import com.hamada.sinwar.myproject2021.adapters.StaticsAdapter
@@ -20,7 +21,7 @@ class StaticsFragment : Fragment() {
 
         app = requireActivity().application as NewsApplication
         val adapter = StaticsAdapter(app)
-        root.rvStatics.layoutManager = LinearLayoutManager(requireContext())
+        root.rvStatics.layoutManager = GridLayoutManager(requireContext(), 2)
         root.rvStatics.adapter = adapter
 
         return root

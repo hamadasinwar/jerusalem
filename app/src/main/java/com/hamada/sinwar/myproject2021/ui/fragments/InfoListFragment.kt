@@ -15,7 +15,7 @@ class InfoListFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.fragment_info_list, container, false)
 
-        root.hicvp.adapter = InfoListAdapter(requireContext(), requireActivity().application as NewsApplication)
+        root.hicvp.adapter = InfoListAdapter(requireActivity(), requireActivity().application as NewsApplication)
 
         return root
     }

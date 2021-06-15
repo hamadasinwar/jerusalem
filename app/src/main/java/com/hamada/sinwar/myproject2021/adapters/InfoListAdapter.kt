@@ -1,6 +1,6 @@
 package com.hamada.sinwar.myproject2021.adapters
 
-import android.content.Context
+import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +10,7 @@ import com.hamada.sinwar.myproject2021.app.NewsApplication
 import com.hamada.sinwar.myproject2021.models.MyMarker
 import com.hamada.sinwar.myproject2021.util.Utils
 
-class InfoListAdapter(val context: Context, val app: NewsApplication):PagerAdapter() {
+class InfoListAdapter(val act: Activity, val app: NewsApplication):PagerAdapter() {
 
     val data:MutableList<MyMarker> = app.cityInfo
 
@@ -23,8 +23,8 @@ class InfoListAdapter(val context: Context, val app: NewsApplication):PagerAdapt
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        val view = LayoutInflater.from(context).inflate(R.layout.info_list_item, container, false)
-        Utils.setupItem(view, data[position])
+        val view = LayoutInflater.from(act).inflate(R.layout.info_list_item, container, false)
+        Utils().setupItem(act, view, data[position])
         container.addView(view)
         return view
     }

@@ -1,30 +1,34 @@
 package com.hamada.sinwar.myproject2021.ui.fragments
 
+import android.app.ActivityOptions
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.*
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
 import com.hamada.sinwar.myproject2021.R
 import com.hamada.sinwar.myproject2021.adapters.CustomInfoWindowAdapter
 import com.hamada.sinwar.myproject2021.app.NewsApplication
 import com.hamada.sinwar.myproject2021.models.MyMarker
+import com.hamada.sinwar.myproject2021.ui.ImagePreviewActivity
 
 class MapFragment : Fragment(R.layout.fragment_map) {
 
     lateinit var app: NewsApplication
     lateinit var cityInfo:MutableList<MyMarker>
-    lateinit var markers:MutableList<Marker>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         app = requireActivity().application as NewsApplication
         cityInfo = app.cityInfo
-        markers = mutableListOf()
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
     }
@@ -36,11 +40,21 @@ class MapFragment : Fragment(R.layout.fragment_map) {
         for (m in cityInfo){
             val marker = LatLng(m.lat!!, m.long!!)
             val mm = googleMap.addMarker(MarkerOptions().position(marker))
-            markers.add(mm)
         }
         googleMap.setInfoWindowAdapter(CustomInfoWindowAdapter(requireContext(), cityInfo))
         googleMap.uiSettings.isMapToolbarEnabled = false
         googleMap.setMinZoomPreference(12.0f)
         googleMap.isBuildingsEnabled = false
+
+        googleMap.setOnInfoWindowClickListener { marker->
+            for (m in cityInfo){
+                if (LatLng(m.lat!!, m.long!!) == marker.position){
+                    val intent = Intent(requireContext(), ImagePreviewActivity::class.java)
+                    intent.putExtra("preview", "${m.image}")
+                    val options = ActivityOptions.makeSceneTransitionAnimation(requireActivity())
+                    startActivity(intent, options.toBundle())
+                }
+            }
+        }
     }
 }

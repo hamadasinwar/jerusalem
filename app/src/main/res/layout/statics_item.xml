@@ -6,6 +6,8 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical"
+    android:paddingHorizontal="10dp"
+    android:paddingTop="15dp"
     tools:context=".ui.fragments.StaticsFragment">
 
     <FrameLayout
@@ -16,8 +18,8 @@
 
         <com.jackandphantom.circularprogressbar.CircleProgressbar
             android:id="@+id/circleProgressbar"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
             android:layout_gravity="center"
             app:cpb_backgroundProgressColor="#5CFF5A85"
             app:cpb_backgroundProgressWidth="50"

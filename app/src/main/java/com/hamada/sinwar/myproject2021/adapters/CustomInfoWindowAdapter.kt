@@ -1,6 +1,7 @@
 package com.hamada.sinwar.myproject2021.adapters
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import com.google.android.gms.maps.GoogleMap
@@ -11,10 +12,8 @@ import com.hamada.sinwar.myproject2021.models.MyMarker
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.info_window.view.*
-import java.lang.Exception
 
-class CustomInfoWindowAdapter(context: Context,
-                              val cityInfo:MutableList<MyMarker>): GoogleMap.InfoWindowAdapter {
+class CustomInfoWindowAdapter(val context: Context, private val cityInfo:MutableList<MyMarker>): GoogleMap.InfoWindowAdapter {
 
     private val view = LayoutInflater.from(context).inflate(R.layout.info_window, null)
 
@@ -27,7 +26,8 @@ class CustomInfoWindowAdapter(context: Context,
         }
         view.infoTitle.text = myMarker?.title
         view.infoText.text = myMarker?.snippet
-        Picasso.get().load(myMarker?.image).fit().centerCrop()
+
+        Picasso.get().load(myMarker?.image).resize(250, 250).centerCrop()
             .placeholder(R.drawable.the_rock_dome)
             .into(view.infoImage, object : Callback {
                 override fun onSuccess() {
