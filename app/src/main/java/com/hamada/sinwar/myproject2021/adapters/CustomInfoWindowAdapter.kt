@@ -19,8 +19,10 @@ class CustomInfoWindowAdapter(val context: Context, private val cityInfo:Mutable
     private fun renderInfoWindow(marker: Marker){
         var myMarker:MyMarker? = null
         for (mm in cityInfo){
-            if (marker.position == LatLng(mm.lat!!, mm.long!!)){
-               myMarker = mm
+            if (mm.lat != null && mm.long != null){
+                if (marker.position == LatLng(mm.lat!!, mm.long!!)){
+                    myMarker = mm
+                }
             }
         }
         view.infoTitle.text = myMarker?.title

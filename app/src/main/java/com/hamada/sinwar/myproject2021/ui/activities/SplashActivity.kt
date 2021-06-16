@@ -55,6 +55,15 @@ class SplashActivity : AppCompatActivity() {
             }
         }
 
+        db.collection("videoInfo").get().addOnSuccessListener { query->
+            for (doc in query.documents){
+                val marker = MyMarker(doc.id, doc.getString("title"), null,
+                    doc.getString("video"), null,
+                    null)
+                app.cityInfo.add(marker)
+            }
+        }
+
         db.collection("statics").get().addOnSuccessListener { query->
             for (doc in query.documents){
                 val s = Statics(doc.id, doc.getString("text")!!, doc.get("progress").toString().toInt())

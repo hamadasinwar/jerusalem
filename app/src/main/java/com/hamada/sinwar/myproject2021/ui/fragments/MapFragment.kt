@@ -20,7 +20,7 @@ import com.hamada.sinwar.myproject2021.ui.activities.ImagePreviewActivity
 class MapFragment : Fragment(R.layout.fragment_map) {
 
     lateinit var app: NewsApplication
-    lateinit var cityInfo:MutableList<MyMarker>
+    private lateinit var cityInfo:MutableList<MyMarker>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,15 +33,17 @@ class MapFragment : Fragment(R.layout.fragment_map) {
 
     private val callback = OnMapReadyCallback { googleMap ->
         googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(requireContext(), R.raw.map_style))
-        val jerusalem = LatLng(31.768307723966437, 35.21334980686194)
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(jerusalem, 12F))
+        val jerusalem = LatLng(31.78756185955402, 35.231372234103205)
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(jerusalem, 14F))
         for (m in cityInfo){
-            val marker = LatLng(m.lat!!, m.long!!)
-            val mm = googleMap.addMarker(MarkerOptions().position(marker))
+            if (m.lat != null && m.long!= null) {
+                val marker = LatLng(m.lat!!, m.long!!)
+                googleMap.addMarker(MarkerOptions().position(marker))
+            }
         }
         googleMap.setInfoWindowAdapter(CustomInfoWindowAdapter(requireContext(), cityInfo))
         googleMap.uiSettings.isMapToolbarEnabled = false
-        googleMap.setMinZoomPreference(12.0f)
+        googleMap.setMinZoomPreference(13.0f)
         googleMap.isBuildingsEnabled = false
 
         googleMap.setOnInfoWindowClickListener { marker->

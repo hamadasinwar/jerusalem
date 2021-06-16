@@ -2,7 +2,9 @@ package com.hamada.sinwar.myproject2021.ui.fragments
 
 import android.app.Activity
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
@@ -40,6 +42,7 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news), NewsAdapter.On
                 Snackbar.make(view, "Article deleted Successfully", Snackbar.LENGTH_LONG).apply {
                     setAction("Undo"){
                         app.viewModel.saveArticle(article)
+                        noArticles.visibility = View.GONE
                     }
                     show()
                 }
@@ -49,6 +52,14 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news), NewsAdapter.On
         ItemTouchHelper(itemTouchHelperCallBack).attachToRecyclerView(rvSavedNews)
 
         app.viewModel.getSavedNews().observe(viewLifecycleOwner) { articles ->
+            if (articles.isEmpty()){
+                val a = AnimationUtils.loadAnimation(requireContext(), R.anim.scale_up)
+                noArticles.visibility = View.VISIBLE
+                Handler().postDelayed({
+                    txt.visibility = View.VISIBLE
+                    txt.startAnimation(a)
+                }, 1000)
+            }
             newsAdapter.differ.submitList(articles)
         }
     }
