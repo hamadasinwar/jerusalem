@@ -9,17 +9,13 @@ import android.view.View
 import android.widget.AbsListView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.FirebaseApp
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import com.hamada.sinwar.myproject2021.R
 import com.hamada.sinwar.myproject2021.adapters.NewsAdapter
 import com.hamada.sinwar.myproject2021.app.NewsApplication
-import com.hamada.sinwar.myproject2021.models.MyMarker
 import com.hamada.sinwar.myproject2021.util.Constants.Companion.QUERY_PAGE_SIZE
 import com.hamada.sinwar.myproject2021.util.Resource
 import kotlinx.android.synthetic.main.fragment_breaking_news.*
@@ -32,7 +28,7 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news), NewsAdap
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         app = requireActivity().application as NewsApplication
-        app.breakingNews.observe(viewLifecycleOwner, { response ->
+        app.breakingNews.observe(viewLifecycleOwner) { response ->
             when(response) {
                 is Resource.Success -> {
                     hideProgressBar()
@@ -56,7 +52,7 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news), NewsAdap
                     showProgressBar()
                 }
             }
-        })
+        }
 
     }
 

@@ -1,7 +1,6 @@
 package com.hamada.sinwar.myproject2021.adapters
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import com.google.android.gms.maps.GoogleMap

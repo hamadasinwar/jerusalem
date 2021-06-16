@@ -4,7 +4,6 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities.*
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.hamada.sinwar.myproject2021.app.NewsApplication
 import com.hamada.sinwar.myproject2021.models.Article
@@ -18,11 +17,7 @@ import retrofit2.Response
 class NewsViewModel(val app: NewsApplication, private val newsRepository: NewsRepository) : AndroidViewModel(app) {
 
     var breakingNewsPage = 1
-    var breakingNewsResponse: NewsResponse? = null
-
-    val searchNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
-    var searchNewsPage = 1
-    var searchNewsResponse: NewsResponse? = null
+    private var breakingNewsResponse: NewsResponse? = null
 
     init {
         getBreakingNews()
@@ -30,10 +25,6 @@ class NewsViewModel(val app: NewsApplication, private val newsRepository: NewsRe
 
     fun getBreakingNews() = viewModelScope.launch {
         safeBreakingNewsCall()
-    }
-
-    fun searchNews(searchQuery: String) = viewModelScope.launch {
-        safeSearchNewsCall(searchQuery)
     }
 
     private fun handleBreakingNewsResponse(response: Response<NewsResponse>) : Resource<NewsResponse> {
@@ -53,25 +44,8 @@ class NewsViewModel(val app: NewsApplication, private val newsRepository: NewsRe
         return Resource.Error(response.message())
     }
 
-    private fun handleSearchNewsResponse(response: Response<NewsResponse>) : Resource<NewsResponse> {
-        if(response.isSuccessful) {
-            response.body()?.let { resultResponse ->
-                searchNewsPage++
-                if (searchNewsResponse == null){
-                    searchNewsResponse = resultResponse
-                }else{
-                    val oldArticles = searchNewsResponse?.articles
-                    val newArticles = resultResponse.articles
-                    oldArticles?.addAll(newArticles)
-                }
-                return Resource.Success(searchNewsResponse?:resultResponse)
-            }
-        }
-        return Resource.Error(response.message())
-    }
-
     fun saveArticle(article: Article) = viewModelScope.launch {
-        val l = newsRepository.replace(article)
+        newsRepository.replace(article)
     }
 
     fun getSavedNews() = newsRepository.getSavedNews()
@@ -93,23 +67,6 @@ class NewsViewModel(val app: NewsApplication, private val newsRepository: NewsRe
             when(t){
                 is IOException -> app.breakingNews.postValue(Resource.Error("Network Failure"))
                 else -> app.breakingNews.postValue(Resource.Error("Conversion Error"))
-            }
-        }
-    }
-
-    private suspend fun safeSearchNewsCall(searchQuery: String){
-        searchNews.postValue((Resource.Loading()))
-        try {
-            if (hasInternetConnection()) {
-                val response = newsRepository.searchNews(searchQuery, searchNewsPage)
-                searchNews.postValue(handleSearchNewsResponse(response))
-            }else{
-                searchNews.postValue(Resource.Error("No internet connection"))
-            }
-        }catch (t: Throwable){
-            when(t){
-                is IOException -> searchNews.postValue(Resource.Error("Network Failure"))
-                else -> searchNews.postValue(Resource.Error("Conversion Error"))
             }
         }
     }

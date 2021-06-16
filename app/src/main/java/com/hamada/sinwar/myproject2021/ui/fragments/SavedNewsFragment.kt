@@ -2,9 +2,9 @@ package com.hamada.sinwar.myproject2021.ui.fragments
 
 import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,12 +27,8 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news), NewsAdapter.On
 
         val itemTouchHelperCallBack = object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.UP or ItemTouchHelper.DOWN,
-            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
-        ){
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT){
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder
             ): Boolean {
                 return true
             }
@@ -52,11 +48,9 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news), NewsAdapter.On
 
         ItemTouchHelper(itemTouchHelperCallBack).attachToRecyclerView(rvSavedNews)
 
-        app.viewModel.getSavedNews().observe(viewLifecycleOwner, { articles ->
-
-            Log.e("hmd", "${articles.size}")
+        app.viewModel.getSavedNews().observe(viewLifecycleOwner) { articles ->
             newsAdapter.differ.submitList(articles)
-        })
+        }
     }
 
     private fun setupRecyclerView() {

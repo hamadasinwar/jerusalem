@@ -10,9 +10,9 @@ import com.hamada.sinwar.myproject2021.app.NewsApplication
 import com.hamada.sinwar.myproject2021.models.MyMarker
 import com.hamada.sinwar.myproject2021.util.Utils
 
-class InfoListAdapter(val act: Activity, val app: NewsApplication):PagerAdapter() {
+class InfoListAdapter(private val act: Activity, val app: NewsApplication):PagerAdapter() {
 
-    val data:MutableList<MyMarker> = app.cityInfo
+    private val data:MutableList<MyMarker> = app.cityInfo
 
     override fun getCount(): Int {
         return data.size
