@@ -1,4 +1,4 @@
-package com.hamada.sinwar.myproject2021.ui
+package com.hamada.sinwar.myproject2021.ui.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +9,8 @@ import com.hamada.sinwar.myproject2021.R
 import com.hamada.sinwar.myproject2021.app.NewsApplication
 import com.hamada.sinwar.myproject2021.db.ArticleDatabase
 import com.hamada.sinwar.myproject2021.repository.NewsRepository
+import com.hamada.sinwar.myproject2021.ui.viewModel.NewsViewModel
+import com.hamada.sinwar.myproject2021.ui.viewModel.NewsViewModelProviderFactory
 import kotlinx.android.synthetic.main.activity_news.*
 
 class NewsActivity : AppCompatActivity() {
@@ -19,7 +21,11 @@ class NewsActivity : AppCompatActivity() {
 
         val app = application as NewsApplication
         val newsRepository = NewsRepository(ArticleDatabase(this))
-        val viewModelProviderFactory = NewsViewModelProviderFactory(application as NewsApplication, newsRepository)
+        val viewModelProviderFactory =
+            NewsViewModelProviderFactory(
+                application as NewsApplication,
+                newsRepository
+            )
         app.viewModel = ViewModelProvider(this, viewModelProviderFactory).get(NewsViewModel::class.java)
 
         bottomNavigationView.setupWithNavController(newsNavHostFragment.findNavController())

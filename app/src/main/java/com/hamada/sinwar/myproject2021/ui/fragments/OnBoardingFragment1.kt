@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.hamada.sinwar.myproject2021.R
-import com.hamada.sinwar.myproject2021.ui.NewsActivity
+import com.hamada.sinwar.myproject2021.ui.activities.NewsActivity
 import kotlinx.android.synthetic.main.fragment_onboarding1.view.*
 
 class OnBoardingFragment1 : Fragment() {

@@ -1,4 +1,4 @@
-package com.hamada.sinwar.myproject2021.ui
+package com.hamada.sinwar.myproject2021.ui.activities
 
 import android.os.Bundle
 import android.view.animation.AnimationUtils

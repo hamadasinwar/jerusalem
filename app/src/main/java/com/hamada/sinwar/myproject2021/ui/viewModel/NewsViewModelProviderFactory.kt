@@ -1,4 +1,4 @@
-package com.hamada.sinwar.myproject2021.ui
+package com.hamada.sinwar.myproject2021.ui.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -11,6 +11,9 @@ class NewsViewModelProviderFactory(
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return NewsViewModel(app, newsRepository) as T
+        return NewsViewModel(
+            app,
+            newsRepository
+        ) as T
     }
 }

@@ -1,6 +1,6 @@
 @file:Suppress("DEPRECATION")
 
-package com.hamada.sinwar.myproject2021.ui
+package com.hamada.sinwar.myproject2021.ui.activities
 
 import android.content.Context
 import android.content.Intent
@@ -18,6 +18,8 @@ import com.hamada.sinwar.myproject2021.db.ArticleDatabase
 import com.hamada.sinwar.myproject2021.models.MyMarker
 import com.hamada.sinwar.myproject2021.models.Statics
 import com.hamada.sinwar.myproject2021.repository.NewsRepository
+import com.hamada.sinwar.myproject2021.ui.viewModel.NewsViewModel
+import com.hamada.sinwar.myproject2021.ui.viewModel.NewsViewModelProviderFactory
 
 class SplashActivity : AppCompatActivity() {
 
@@ -32,7 +34,11 @@ class SplashActivity : AppCompatActivity() {
         db = Firebase.firestore
         app = application as NewsApplication
         val newsRepository = NewsRepository(ArticleDatabase(this))
-        val viewModelProviderFactory = NewsViewModelProviderFactory(application as NewsApplication, newsRepository)
+        val viewModelProviderFactory =
+            NewsViewModelProviderFactory(
+                application as NewsApplication,
+                newsRepository
+            )
         app.viewModel = ViewModelProvider(this, viewModelProviderFactory).get(NewsViewModel::class.java)
 
         val sharedPref = getSharedPreferences("com.hamada.sinwar", Context.MODE_PRIVATE)

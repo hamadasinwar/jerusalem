@@ -9,7 +9,7 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.hamada.sinwar.myproject2021.R
 import com.hamada.sinwar.myproject2021.models.MyMarker
-import com.hamada.sinwar.myproject2021.ui.ImagePreviewActivity
+import com.hamada.sinwar.myproject2021.ui.activities.ImagePreviewActivity
 
 class Utils {
     fun setupItem(activity: Activity, view: View, obj: MyMarker){

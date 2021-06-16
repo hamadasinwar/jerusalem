@@ -16,16 +16,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.ImagePreviewActivity"
+            android:name=".ui.activities.ImagePreviewActivity"
             android:label="@string/title_activity_image_preview"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".ui.OnBoardingActivity"
+            android:name=".ui.activities.OnBoardingActivity"
             android:label="@string/title_activity_on_boarding"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.SplashActivity"
+            android:name=".ui.activities.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,7 +38,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".ui.NewsActivity" />
+        <activity android:name=".ui.activities.NewsActivity" />
     </application>
 
 </manifest>
