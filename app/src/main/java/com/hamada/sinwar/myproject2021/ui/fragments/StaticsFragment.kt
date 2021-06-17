@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.hamada.sinwar.myproject2021.R
 import com.hamada.sinwar.myproject2021.adapters.StaticsAdapter
 import com.hamada.sinwar.myproject2021.app.NewsApplication

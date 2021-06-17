@@ -68,9 +68,6 @@ class SplashActivity : AppCompatActivity() {
             for (doc in query.documents){
                 val s = Statics(doc.id, doc.getString("text")!!, doc.get("progress").toString().toInt())
                 app.staticsInfo.add(s)
-                app.staticsInfo.add(s)
-                app.staticsInfo.add(s)
-                app.staticsInfo.add(s)
             }
         }
 

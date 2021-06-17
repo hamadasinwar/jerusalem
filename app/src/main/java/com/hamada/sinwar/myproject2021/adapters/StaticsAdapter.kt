@@ -15,6 +15,10 @@ class StaticsAdapter(app:NewsApplication):RecyclerView.Adapter<StaticsAdapter.St
 
     private val staticsInfo = app.staticsInfo
 
+    init {
+        staticsInfo.shuffle()
+    }
+
     inner class StaticsViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
         val text: TextView = itemView.tvStatics
         val progressBar: CircleProgressbar = itemView.circleProgressbar
