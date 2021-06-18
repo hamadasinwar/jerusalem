@@ -32,7 +32,8 @@ class MapFragment : Fragment(R.layout.fragment_map) {
     }
 
     private val callback = OnMapReadyCallback { googleMap ->
-        googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(requireContext(), R.raw.map_style))
+
+        googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(requireContext(), R.raw.map_style_light))
         val jerusalem = LatLng(31.78756185955402, 35.231372234103205)
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(jerusalem, 14F))
         for (m in cityInfo){
@@ -48,11 +49,13 @@ class MapFragment : Fragment(R.layout.fragment_map) {
 
         googleMap.setOnInfoWindowClickListener { marker->
             for (m in cityInfo){
-                if (LatLng(m.lat!!, m.long!!) == marker.position){
-                    val intent = Intent(requireContext(), ImagePreviewActivity::class.java)
-                    intent.putExtra("preview", "${m.image}")
-                    val options = ActivityOptions.makeSceneTransitionAnimation(requireActivity())
-                    startActivity(intent, options.toBundle())
+                if (m.lat != null && m.long != null){
+                    if (LatLng(m.lat!!, m.long!!) == marker.position){
+                        val intent = Intent(requireContext(), ImagePreviewActivity::class.java)
+                        intent.putExtra("preview", "${m.image}")
+                        val options = ActivityOptions.makeSceneTransitionAnimation(requireActivity())
+                        startActivity(intent, options.toBundle())
+                    }
                 }
             }
         }

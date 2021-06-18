@@ -56,8 +56,8 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news), NewsAdapter.On
                 val a = AnimationUtils.loadAnimation(requireContext(), R.anim.scale_up)
                 noArticles.visibility = View.VISIBLE
                 Handler().postDelayed({
-                    txt.visibility = View.VISIBLE
-                    txt.startAnimation(a)
+                    txt?.visibility = View.VISIBLE
+                    txt?.startAnimation(a)
                 }, 1000)
             }
             newsAdapter.differ.submitList(articles)

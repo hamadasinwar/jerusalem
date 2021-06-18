@@ -10,9 +10,6 @@ class NewsRepository(private val db: ArticleDatabase) {
     suspend fun getBreakingNews(pageNumber: Int) =
         RetrofitInstance.api.getBreakingNews(pageNumber, "publishedAt")
 
-    suspend fun searchNews(countryCode: String, pageNumber: Int) =
-        RetrofitInstance.api.searchForNews(countryCode, pageNumber)
-
     suspend fun replace(article: Article):Long {
         val l = db.getArticleDao().replace(article)
         Log.e("hmd", "Log: $l")

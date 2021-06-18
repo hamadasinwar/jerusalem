@@ -3,7 +3,6 @@ package com.hamada.sinwar.myproject2021.ui.activities
 import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.transition.Transition
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.bumptech.glide.Glide
@@ -85,12 +84,12 @@ class ImagePreviewActivity : YouTubeBaseActivity() {
 
         val compiledPattern: Pattern = Pattern.compile(pattern)
         val matcher: Matcher =
-            compiledPattern.matcher(url) //url is youtube url for which you want to extract the id.
+            compiledPattern.matcher(url)
 
-        if (matcher.find()) {
-            return matcher.group()
+        return if (matcher.find()) {
+            matcher.group()
         }else{
-            return null
+            null
         }
     }
 

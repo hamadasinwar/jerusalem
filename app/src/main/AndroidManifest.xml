@@ -18,8 +18,7 @@
         <activity
             android:name=".ui.activities.ImagePreviewActivity"
             android:label="@string/title_activity_image_preview"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".ui.activities.OnBoardingActivity"
             android:label="@string/title_activity_on_boarding"

@@ -23,7 +23,7 @@ import com.hamada.sinwar.myproject2021.ui.viewModel.NewsViewModelProviderFactory
 
 class SplashActivity : AppCompatActivity() {
 
-    lateinit var i:Intent
+    private lateinit var i:Intent
     lateinit var app:NewsApplication
     private lateinit var db: FirebaseFirestore
 
@@ -44,6 +44,10 @@ class SplashActivity : AppCompatActivity() {
         val sharedPref = getSharedPreferences("com.hamada.sinwar", Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
         val isFirstTime = sharedPref.getBoolean("isFirstTime", true)
+        val dark = sharedPref.getString("darkMode", null)
+        if (dark == null){
+            editor.putString("darkMode", "light")
+        }
 
         FirebaseApp.initializeApp(this)
         db.collection("cityInfo").get().addOnSuccessListener { query->

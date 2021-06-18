@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.hamada.sinwar.myproject2021.R
-import com.hamada.sinwar.myproject2021.adapters.TabLayoutViewPagerAdapter
 import kotlinx.android.synthetic.main.fragment_about_city.view.*
 
 class AboutCityFragment : Fragment() {

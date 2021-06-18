@@ -5,9 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.messaging.FirebaseMessaging
-import com.google.firebase.messaging.ktx.messaging
 import com.hamada.sinwar.myproject2021.R
 import com.hamada.sinwar.myproject2021.app.NewsApplication
 import com.hamada.sinwar.myproject2021.db.ArticleDatabase
@@ -18,13 +15,9 @@ import kotlinx.android.synthetic.main.activity_news.*
 
 class NewsActivity : AppCompatActivity() {
 
-    lateinit var messaging:FirebaseMessaging
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news)
-
-        messaging = Firebase.messaging
 
         bottomNavigationView.setupWithNavController(newsNavHostFragment.findNavController())
 
@@ -38,6 +31,5 @@ class NewsActivity : AppCompatActivity() {
         app.viewModel = ViewModelProvider(this, viewModelProviderFactory).get(NewsViewModel::class.java)
 
     }
-
 
 }
